@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/nameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Device Name"
+            android:textSize="20dp"/>
+        <EditText
+            android:id="@+id/loadEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:hint="Load (W)"
+            android:textSize="20dp"/>
+        <EditText
+            android:id="@+id/quantityEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:hint="Quantity"
+            android:textSize="20dp"/>
+        <EditText
+            android:id="@+id/hrsDailyEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:hint="Hours Daily (h)"
+            android:textSize="20dp"/>
+        <EditText
+            android:id="@+id/daysEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="160dp"
+            android:hint="Days"
+            android:textSize="20dp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
