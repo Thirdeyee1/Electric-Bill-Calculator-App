@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         final EditText load = view.findViewById(R.id.loadEdit);
         final EditText quantity = view.findViewById(R.id.quantityEdit);
         final EditText hrsDaily = view.findViewById(R.id.hrsDailyEdit);
-        final EditText days = view.findViewById(R.id.daysEdit);
 
         builder.setView(view);
         builder.setTitle("Enter Details")
@@ -54,9 +53,8 @@ public class MainActivity extends AppCompatActivity {
                         String loadStr = load.getText().toString();
                         String quantityStr = quantity.getText().toString();
                         String hrsDailyStr = hrsDaily.getText().toString();
-                        String daysStr = days.getText().toString();
 
-                        addCard(nameStr, loadStr, quantityStr, hrsDailyStr, daysStr);
+                        addCard(nameStr, loadStr, quantityStr, hrsDailyStr);
 
 
                     }
@@ -71,14 +69,17 @@ public class MainActivity extends AppCompatActivity {
         dialog = builder.create();
     }
 
-    private void addCard(String name, String load, String quantity, String hrsDaily, String days) {
+    private void addCard(String name, String load, String quantity, String hrsDaily) {
         final View view = getLayoutInflater().inflate(R.layout.card, null);
 
         TextView nameView = view.findViewById(R.id.name);
         TextView loadView = view.findViewById(R.id.load);
         TextView quantityView = view.findViewById(R.id.quantity);
         TextView hrsDailyView = view.findViewById(R.id.hrsDaily);
-        TextView daysDailyView = view.findViewById(R.id.days);
+
+        TextView viewD = view.findViewById(R.id.costDaily);
+        TextView viewM = view.findViewById(R.id.costMonthly);
+        TextView viewY = view.findViewById(R.id.costYearly);
 
         Button delete = view.findViewById(R.id.delete);
 
@@ -86,7 +87,14 @@ public class MainActivity extends AppCompatActivity {
         loadView.setText(load);
         quantityView.setText(quantity);
         hrsDailyView.setText(hrsDaily);
-        daysDailyView.setText(days);
+
+        double l = Double.parseDouble(load);
+        double q = Double.parseDouble(quantity);
+        double h = Double.parseDouble(hrsDaily);
+
+        viewD.setText(String.format("%.2f", 11.85*l/1000*q*h));
+        viewM.setText(String.format("%.2f", 11.85*l/1000*q*h*31));
+        viewY.setText(String.format("%.2f", 11.85*l/1000*q*h*365.25));
 
         delete.setOnClickListener(new View.OnClickListener() {
             @Override

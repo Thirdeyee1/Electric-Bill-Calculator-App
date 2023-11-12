@@ -35,13 +35,6 @@
             android:layout_marginTop="120dp"
             android:hint="Hours Daily (h)"
             android:textSize="20dp"/>
-        <EditText
-            android:id="@+id/daysEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="160dp"
-            android:hint="Days"
-            android:textSize="20dp"/>
 
     </RelativeLayout>
 
