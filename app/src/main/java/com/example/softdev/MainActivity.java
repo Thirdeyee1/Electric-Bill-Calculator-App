@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
         TextView viewD = view.findViewById(R.id.costDaily);
         TextView viewM = view.findViewById(R.id.costMonthly);
-        TextView viewY = view.findViewById(R.id.costYearly);
 
         Button delete = view.findViewById(R.id.delete);
 
@@ -94,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
         viewD.setText(String.format("%.2f", 11.85*l/1000*q*h));
         viewM.setText(String.format("%.2f", 11.85*l/1000*q*h*31));
-        viewY.setText(String.format("%.2f", 11.85*l/1000*q*h*365.25));
 
         delete.setOnClickListener(new View.OnClickListener() {
             @Override

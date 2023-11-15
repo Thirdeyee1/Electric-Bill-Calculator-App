@@ -117,24 +117,6 @@
                     android:text="  Monthly" />
 
                 <TextView
-                    android:id="@+id/costYearly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="10dp"
-                    android:layout_toRightOf="@id/monthlyLabel"
-                    android:text="y" />
-
-                <TextView
-                    android:id="@+id/yearlyLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="10dp"
-                    android:layout_toRightOf="@id/costYearly"
-                    android:text="  Yearly" />
-
-                <TextView
                     android:id="@+id/loadLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
