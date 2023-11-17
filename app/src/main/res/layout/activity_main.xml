@@ -25,63 +25,48 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:orientation="vertical">
+                >
 
-                <EditText
-                    android:id="@+id/month1"
-                    android:layout_width="250dp"
+                <TextView
+                    android:id="@+id/total"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Month 1 rate (₱/KwH)"
-                    android:textSize="20dp" />
+                    android:text="Total Electricity Cost:"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="20sp" />
 
-                <EditText
-                    android:id="@+id/month2"
-                    android:layout_width="250dp"
+                <TextView
+                    android:id="@+id/daily"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Month 2 rate (₱/KwH)"
-                    android:textSize="20dp" />
-
-                <EditText
-                    android:id="@+id/month3"
-                    android:layout_width="250dp"
+                    android:layout_below="@+id/total"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Daily:"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/monthly"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Month 3 rate (₱/KwH)"
-                    android:textSize="20dp" />
+                    android:layout_below="@+id/total"
+                    android:layout_marginLeft="200dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Monthly:"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-            </LinearLayout>
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="280dp"
-        android:text="Click 'Add' to add devices on slot."
-        android:textColor="#9C9C9C"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:textSize="20sp" />
-    <Button
-        android:id="@+id/add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="230dp"
-        android:layout_marginBottom="8dp"
-        android:text="Add" />
-
-    <Button
-        android:id="@+id/calculate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="80dp"
-        android:layout_marginBottom="8dp"
-        android:text="Calcualte" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -97,6 +82,24 @@
         </LinearLayout>
     </ScrollView>
 
+    <Button
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="245dp"
+        android:layout_marginBottom="8dp"
+        android:text="Add" />
+
+    <Button
+        android:id="@+id/summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="80dp"
+        android:layout_marginBottom="8dp"
+        android:text="View Summary" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="311dp"
@@ -106,6 +109,4 @@
         android:layout_centerHorizontal="true">
 
     </ImageView>
-
-
 </RelativeLayout>
