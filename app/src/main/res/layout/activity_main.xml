@@ -32,7 +32,7 @@
                 >
 
                 <TextView
-                    android:id="@+id/total"
+                    android:id="@+id/totalLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total Electricity Cost:"
@@ -42,10 +42,10 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/daily"
+                    android:id="@+id/total_dailyLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/total"
+                    android:layout_below="@+id/totalLabel"
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="15dp"
                     android:text="Daily:"
@@ -53,16 +53,36 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <TextView
-                    android:id="@+id/monthly"
+                    android:id="@+id/total_monthlyLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/total"
+                    android:layout_below="@+id/totalLabel"
                     android:layout_marginLeft="200dp"
                     android:layout_marginTop="15dp"
                     android:text="Monthly:"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/total_daily"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/total_dailyLabel"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_toRightOf="@id/total_dailyLabel"
+                    android:text="0.00" />
+
+                <TextView
+                    android:id="@+id/total_monthly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/total_monthlyLabel"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_toRightOf="@id/total_monthlyLabel"
+                    android:text="0.00" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
