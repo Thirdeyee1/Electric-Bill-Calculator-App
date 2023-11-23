@@ -18,15 +18,15 @@ public class MainActivity2 extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMainActivity();
+                openManual();
 
             }
         });
 
 
     }
-    public void openMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+    public void openManual() {
+        Intent intent = new Intent(this, manual.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
