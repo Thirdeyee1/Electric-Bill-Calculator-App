@@ -102,12 +102,20 @@ public class manual extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_manual);
 
 
         //For the new window
         Button summary = findViewById(R.id.summary);
         summary.setOnClickListener(v -> openActivity2());
+
+        Button back = (Button) findViewById(R.id.btnGoBack1);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMain();
+            }
+        });
 
         //For building dialog
         add = findViewById(R.id.add);
@@ -126,6 +134,10 @@ public class manual extends AppCompatActivity {
             initialSlotReplaced = true;
             dialog.show();
         });
+    }
+    public void openMain(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
     public void openActivity2(){
         Intent intent = new Intent(this, MainActivity2.class);
