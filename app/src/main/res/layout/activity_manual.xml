@@ -35,7 +35,7 @@
                     android:id="@+id/totalLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_totalcost"
+                    android:text="@string/label_totalCost"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"

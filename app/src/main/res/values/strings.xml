@@ -14,8 +14,12 @@
     <string name="button_export">Export</string>
     <string name="label_daily">Daily:</string>
     <string name="label_monthly">Monthly:</string>
-    <string name="label_totalcost">Total Electricity Cost:</string>
+    <string name="label_totalCost">Total Electricity Cost:</string>
     <string name="label_zero">0.00</string>
     <string name="label_cost">Cost (Php)</string>
-
+    <string name="label_dailyS">Daily</string>
+    <string name="label_monthlyS">Monthly</string>
+    <string name="label_load">Watts</string>
+    <string name="label_quantity">Unit/s</string>
+    <string name="label_hour">hr/s</string>
 </resources>
