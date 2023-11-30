@@ -35,7 +35,7 @@
                     android:id="@+id/totalLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total Electricity Cost:"
+                    android:text="@string/label_totalcost"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"
@@ -46,9 +46,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/totalLabel"
-                    android:layout_marginLeft="25dp"
+                    android:layout_marginStart="25dp"
                     android:layout_marginTop="15dp"
-                    android:text="Daily:"
+                    android:text="@string/label_daily"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -57,9 +57,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/totalLabel"
-                    android:layout_marginLeft="200dp"
+                    android:layout_marginStart="200dp"
                     android:layout_marginTop="15dp"
-                    android:text="Monthly:"
+                    android:text="@string/label_monthly"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -69,20 +69,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/total_dailyLabel"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginBottom="0dp"
-                    android:layout_toRightOf="@id/total_dailyLabel"
-                    android:text="0.00" />
+                    android:layout_toEndOf="@id/total_dailyLabel"
+                    android:text="@string/label_zero" />
 
                 <TextView
                     android:id="@+id/total_monthly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/total_monthlyLabel"
-                    android:layout_marginLeft="6dp"
+                    android:layout_marginStart="6dp"
                     android:layout_marginBottom="0dp"
-                    android:layout_toRightOf="@id/total_monthlyLabel"
-                    android:text="0.00" />
+                    android:layout_toEndOf="@id/total_monthlyLabel"
+                    android:text="@string/label_zero" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -107,33 +107,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="245dp"
+        android:layout_marginStart="245dp"
         android:layout_marginBottom="8dp"
-        android:text="Add" />
+        android:text="@string/button_add" />
 
     <Button
         android:id="@+id/summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="80dp"
+        android:layout_marginStart="80dp"
         android:layout_marginBottom="8dp"
-        android:text="View Summary" />
+        android:text="@string/button_summary" />
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="311dp"
         android:layout_height="49dp"
         android:layout_marginTop="10dp"
         app:srcCompat="@drawable/ccfulllogo"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:importantForAccessibility="no">
 
     </ImageView>
     <Button
         android:id="@+id/btnGoBack1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go Back"
+        android:text="@string/button_back"
         android:layout_marginTop="10dp"/>
 
 </RelativeLayout>

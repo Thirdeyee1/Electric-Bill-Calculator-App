@@ -11,7 +11,7 @@
         android:id="@+id/btnGoBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go Back"
+        android:text="@string/button_back"
         android:layout_marginTop="10dp"/>
 
     <RelativeLayout
@@ -37,16 +37,15 @@
                     android:id="@+id/sDaily"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total Daily Electricity Cost:"
+                    android:text="@string/label_daily"
                     android:layout_marginTop="20dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="20sp" />
                 <TextView
-                    android:id="@+id/sMonthly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total Monthly Electricity Cost:"
+                    android:text="@string/label_monthly"
                     android:layout_below="@id/sDaily"
                     android:layout_marginTop="20dp"
                     android:textColor="@color/black"
@@ -66,22 +65,21 @@
 
     </RelativeLayout>
     <Button
-        android:id="@+id/Export"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="80dp"
+        android:layout_marginStart="80dp"
         android:layout_marginBottom="8dp"
         android:layout_centerHorizontal="true"
-        android:text="Export" />
+        android:text="@string/button_export" />
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="311dp"
         android:layout_height="49dp"
         android:layout_marginTop="10dp"
         app:srcCompat="@drawable/ccfulllogo"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:importantForAccessibility="no">
 
     </ImageView>
 

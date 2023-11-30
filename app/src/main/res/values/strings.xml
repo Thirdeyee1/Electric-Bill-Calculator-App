@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">SoftDev</string>
+    <string name="app_name">Current Care</string>
+    <string name="select">Select Load Type</string>
+    <string name="toManual">Manual Cost Calculator</string>
+    <string name="toAuto">Automatic Cost Calculator</string>
+    <string name="dialog_daily">Hours of Daily Use</string>
+    <string name="dialog_quantity">Quantity of Appliance</string>
+    <string name="dialog_load">Rated Power</string>
+    <string name="dialog_name">Appliance Name</string>
+    <string name="button_back">Back</string>
+    <string name="button_summary">View Summary</string>
+    <string name="button_add">Add</string>
+    <string name="button_delete">Delete</string>
+    <string name="button_export">Export</string>
+    <string name="label_daily">Daily:</string>
+    <string name="label_monthly">Monthly:</string>
+    <string name="label_totalcost">Total Electricity Cost:</string>
+    <string name="label_zero">0.00</string>
+    <string name="label_cost">Cost (Php)</string>
+
 </resources>

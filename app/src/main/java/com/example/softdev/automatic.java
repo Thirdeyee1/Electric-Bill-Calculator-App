@@ -15,31 +15,31 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-class Node {
+class A_Node {
     final double data;
-    Node next;
+    A_Node next;
 
-    Node(double data) {
+    A_Node(double data) {
         this.data = data;
         this.next = null;
     }
 }
 
-class LinkedList {
-    private Node head;
+class A_LinkedList {
+    private A_Node head;
 
-    LinkedList() {
+    A_LinkedList() {
         this.head = null;
     }
 
     // Method to add a new node with given data at the end of the list
     public void add(double data) {
-        Node newNode = new Node(data);
+        A_Node newNode = new A_Node(data);
 
         if (head == null) {
             head = newNode;
         } else {
-            Node temp = head;
+            A_Node temp = head;
             while (temp.next != null) {
                 temp = temp.next;
             }
@@ -58,8 +58,8 @@ class LinkedList {
             return;
         }
 
-        Node temp = head;
-        Node prev = null;
+        A_Node temp = head;
+        A_Node prev = null;
         int count = 0;
 
         while (temp != null) {
@@ -76,7 +76,7 @@ class LinkedList {
 
     // Method to calculate the sum of all values in the list
     public double sumOfValues() {
-        Node temp = head;
+        A_Node temp = head;
         double sum = 0.0;
 
         while (temp != null) {
@@ -88,17 +88,14 @@ class LinkedList {
     }
 }
 
-public class manual extends AppCompatActivity {
-    final LinkedList myList = new LinkedList();
+public class automatic extends AppCompatActivity {
+    final A_LinkedList myList = new A_LinkedList();
 
     Button add;
     AlertDialog dialog;
     LinearLayout layout;
 
-
-    private View exampleSlotView;
     private int cardIndex = 0;
-    boolean initialSlotReplaced = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,16 +117,8 @@ public class manual extends AppCompatActivity {
         // Build the dialog
         buildDialog();
 
-        // Check if the initial slot has been replaced
-        if (!initialSlotReplaced) {
-            addExampleSlot();
-        }
 
-
-        add.setOnClickListener(v -> {
-            initialSlotReplaced = true;
-            dialog.show();
-        });
+        add.setOnClickListener(v -> dialog.show());
     }
     public void openMain(){
         Intent intent = new Intent(this, MainActivity.class);
@@ -180,11 +169,11 @@ public class manual extends AppCompatActivity {
             String hrsDailyStr = hrsDaily.getText().toString();
 
             if (isEmpty(nameStr) || isEmpty(loadStr) || isEmpty(quantityStr) || isEmpty(hrsDailyStr)) {
-                Toast.makeText(manual.this, "Please input details", Toast.LENGTH_SHORT).show();}
+                Toast.makeText(automatic.this, "Please input details", Toast.LENGTH_SHORT).show();}
             else if (isEmpty(nameStr)) {
-                Toast.makeText(manual.this, "Please input Device name", Toast.LENGTH_SHORT).show();
+                Toast.makeText(automatic.this, "Please input Device name", Toast.LENGTH_SHORT).show();
             } else if (isEmpty(loadStr) || isEmpty(quantityStr) || isEmpty(hrsDailyStr)){
-                Toast.makeText(manual.this, "Please input valid values", Toast.LENGTH_SHORT).show();
+                Toast.makeText(automatic.this, "Please input valid values", Toast.LENGTH_SHORT).show();
             } else {
                 try {
                     // Attempt to convert input to numbers
@@ -196,7 +185,7 @@ public class manual extends AppCompatActivity {
                     addCard(nameStr, loadStr, quantityStr, hrsDailyStr);
                 } catch (NumberFormatException e) {
                     // Show a toast if conversion to numbers fails
-                    Toast.makeText(manual.this, "Please input valid values", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(automatic.this, "Please input valid values", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -208,8 +197,6 @@ public class manual extends AppCompatActivity {
     }
     @SuppressLint("DefaultLocale")
     private void addCard(String name, String load, String quantity, String hrsDaily) {
-        removeExampleSlot();
-
         @SuppressLint("InflateParams") final View view = getLayoutInflater().inflate(R.layout.card, null);
 
         TextView nameView = view.findViewById(R.id.name);
@@ -250,56 +237,5 @@ public class manual extends AppCompatActivity {
         layout.addView(view);
     }
 
-    // EXAMPLES BELOW
-    //DELETE EXAMPLE SLOT
-    private void removeExampleSlot() {
-        // Remove the example slot from the layout
-        if (exampleSlotView != null) {
-            layout.removeView(exampleSlotView);
-            exampleSlotView = null;
-        }
-    }
 
-    //CREATE EXAMPLE SLOT
-    @SuppressLint("DefaultLocale")
-    private View createAndAddSlot(String name, String load, String quantity, String hrsDaily) {
-        @SuppressLint("InflateParams") View exampleSlotView = getLayoutInflater().inflate(R.layout.card, null);
-
-        TextView nameView = exampleSlotView.findViewById(R.id.name);
-        TextView loadView = exampleSlotView.findViewById(R.id.load);
-        TextView quantityView = exampleSlotView.findViewById(R.id.quantity);
-        TextView hrsDailyView = exampleSlotView.findViewById(R.id.hrsDaily);
-        TextView viewD = exampleSlotView.findViewById(R.id.costDaily);
-        TextView viewM = exampleSlotView.findViewById(R.id.costMonthly);
-
-
-        nameView.setText(name);
-        loadView.setText(load);
-        quantityView.setText(quantity);
-        hrsDailyView.setText(hrsDaily);
-
-        double l = Double.parseDouble(String.valueOf(load));
-        double q = Double.parseDouble(String.valueOf(quantity));
-        double h = Double.parseDouble(String.valueOf(hrsDaily));
-        double computedDaily = 11.85 * l / 1000 * q * h;
-        double computedMonthly = computedDaily * 31;
-
-
-        viewD.setText(String.format("%.2f",computedDaily));
-        viewM.setText(String.format("%.2f",computedMonthly));
-
-        layout.addView(exampleSlotView);
-        return exampleSlotView;
-    }
-
-    private void addExampleSlot() {
-        // Create an example slot with initial data
-        String exampleName = "Example Device";
-        String exampleLoad = "100";
-        String exampleQuantity = "2";
-        String exampleHrsDaily = "4";
-
-        // Add the example slot to the layout
-        exampleSlotView = createAndAddSlot(exampleName, exampleLoad, exampleQuantity, exampleHrsDaily);
-    }
 }
