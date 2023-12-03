@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,6 +97,7 @@ public class manual extends AppCompatActivity {
     LinearLayout layout;
 
 
+
     private View exampleSlotView;
     private int cardIndex = 0;
     boolean initialSlotReplaced = false;
@@ -136,35 +138,13 @@ public class manual extends AppCompatActivity {
         startActivity(intent);
     }
     public void openActivity2(){
-        Intent intent = new Intent(this, MainActivity2.class);
+        Intent intent = new Intent(this, summary.class);
         startActivity(intent);
-    }
-
-    @SuppressLint("DefaultLocale")
-    public void writeTotal(Double t_d){
-        TextView viewT_D = findViewById(R.id.total_daily);
-        TextView viewT_M = findViewById(R.id.total_monthly);
-
-        myList.add(t_d);
-        double sum = myList.sumOfValues();
-
-        viewT_D.setText(String.format("%.2f",sum));
-        viewT_M.setText(String.format("%.2f",sum*31));
-    }
-
-    @SuppressLint("DefaultLocale")
-    public void writeTotal(){
-        TextView viewT_D = findViewById(R.id.total_daily);
-        TextView viewT_M = findViewById(R.id.total_monthly);
-
-        double sum = myList.sumOfValues();
-
-        viewT_D.setText(String.format("%.2f",sum));
-        viewT_M.setText(String.format("%.2f",sum*31));
     }
     private void buildDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog, null);
+        Switch simpleSwitch = (Switch) view.findViewById(R.id.power_type);
 
         final EditText name = view.findViewById(R.id.nameEdit);
         final EditText load = view.findViewById(R.id.loadEdit);
@@ -187,13 +167,16 @@ public class manual extends AppCompatActivity {
                 Toast.makeText(manual.this, "Please input valid values", Toast.LENGTH_SHORT).show();
             } else {
                 try {
-                    // Attempt to convert input to numbers
-                    Double.parseDouble(loadStr);
-                    Double.parseDouble(quantityStr);
-                    Double.parseDouble(hrsDailyStr);
+                    // convert input to numbers
+                    double l = Double.parseDouble(loadStr);
+                    int q = Integer.parseInt(quantityStr);
+                    int h = Integer.parseInt(hrsDailyStr);
+
+                    // check switch if watts or hp
+                    if (simpleSwitch.isChecked()) l *= 745.7;
 
                     // Adding card if conversion is successful
-                    addCard(nameStr, loadStr, quantityStr, hrsDailyStr);
+                    addCard(nameStr, l, q, h);
                 } catch (NumberFormatException e) {
                     // Show a toast if conversion to numbers fails
                     Toast.makeText(manual.this, "Please input valid values", Toast.LENGTH_SHORT).show();
@@ -207,7 +190,7 @@ public class manual extends AppCompatActivity {
         dialog = builder.create();
     }
     @SuppressLint("DefaultLocale")
-    private void addCard(String name, String load, String quantity, String hrsDaily) {
+    private void addCard(String name, double l, int q, int h) {
         removeExampleSlot();
 
         @SuppressLint("InflateParams") final View view = getLayoutInflater().inflate(R.layout.card, null);
@@ -216,22 +199,22 @@ public class manual extends AppCompatActivity {
         TextView loadView = view.findViewById(R.id.load);
         TextView quantityView = view.findViewById(R.id.quantity);
         TextView hrsDailyView = view.findViewById(R.id.hrsDaily);
-
         TextView viewD = view.findViewById(R.id.costDaily);
         TextView viewM = view.findViewById(R.id.costMonthly);
         Button delete = view.findViewById(R.id.delete);
 
+        String str_load = String.valueOf(l);
+        String str_quantity = String.valueOf(q);
+        String str_hrs = String.valueOf(h);
+
+        nameView.setText(name);
+        loadView.setText(str_load);
+        quantityView.setText(str_quantity);
+        hrsDailyView.setText(str_hrs);
+
         int currentIndex = cardIndex;
         ++cardIndex;
 
-        nameView.setText(name);
-        loadView.setText(load);
-        quantityView.setText(quantity);
-        hrsDailyView.setText(hrsDaily);
-
-        double l = Double.parseDouble(String.valueOf(load));
-        double q = Double.parseDouble(String.valueOf(quantity));
-        double h = Double.parseDouble(String.valueOf(hrsDaily));
         double computedDaily = 10 * l / 1000 * q * h;
         double computedMonthly = computedDaily * 31;
 
@@ -249,7 +232,27 @@ public class manual extends AppCompatActivity {
 
         layout.addView(view);
     }
+    @SuppressLint("DefaultLocale")
+    public void writeTotal(Double t_d){
+        TextView viewT_D = findViewById(R.id.total_daily);
+        TextView viewT_M = findViewById(R.id.total_monthly);
 
+        myList.add(t_d);
+        double sum = myList.sumOfValues();
+
+        viewT_D.setText("₱ "+String.format("%.2f",sum));
+        viewT_M.setText("₱ "+String.format("%.2f",sum*31));
+    }
+    @SuppressLint("DefaultLocale")
+    public void writeTotal(){
+        TextView viewT_D = findViewById(R.id.total_daily);
+        TextView viewT_M = findViewById(R.id.total_monthly);
+
+        double sum = myList.sumOfValues();
+
+        viewT_D.setText("₱ "+String.format("%.2f",sum));
+        viewT_M.setText("₱ "+String.format("%.2f",sum*31));
+    }
     // EXAMPLES BELOW
     //DELETE EXAMPLE SLOT
     private void removeExampleSlot() {

@@ -3,23 +3,32 @@
     <string name="select">Select Load Type</string>
     <string name="toManual">Manual Cost Calculator</string>
     <string name="toAuto">Automatic Cost Calculator</string>
-    <string name="dialog_daily">Hours of Daily Use</string>
-    <string name="dialog_quantity">Quantity of Appliance</string>
-    <string name="dialog_load">Rated Power</string>
-    <string name="dialog_name">Appliance Name</string>
+    <string name="dialog_daily">Hours of \nDaily Use</string>
+    <string name="dialog_quantity">Quantity</string>
+    <string name="dialog_load">Rated Power </string>
+    <string name="dialog_name">Appliance</string>
     <string name="button_back">Back</string>
     <string name="button_summary">View Summary</string>
-    <string name="button_add">Add</string>
+    <string name="button_add_appliance">Add Appliance</string>
     <string name="button_delete">Delete</string>
     <string name="button_export">Export</string>
     <string name="label_daily">Daily:</string>
     <string name="label_monthly">Monthly:</string>
     <string name="label_totalCost">Total Electricity Cost:</string>
-    <string name="label_zero">0.00</string>
-    <string name="label_cost">Cost (Php)</string>
+    <string name="label_zero">₱ 0.00</string>
+    <string name="label_cost">Cost (Php) </string>
     <string name="label_dailyS">Daily</string>
     <string name="label_monthlyS">Monthly</string>
     <string name="label_load">Watts</string>
-    <string name="label_quantity">Unit/s</string>
-    <string name="label_hour">hr/s</string>
+    <string name="label_quantity">Unit(s)</string>
+    <string name="label_hour">hr(s)</string>
+
+    <string name="tip_1">Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit, sed do eiusmod tempor incididunt
+        ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+        ea commodo consequat. Duis aute irure dolor in reprehenderit
+        in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint</string>
+
 </resources>

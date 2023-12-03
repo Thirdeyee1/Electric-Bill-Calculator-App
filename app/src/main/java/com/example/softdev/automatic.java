@@ -16,30 +16,30 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 class A_Node {
-    final double data;
+    final double a_data;
     A_Node next;
 
-    A_Node(double data) {
-        this.data = data;
+    A_Node(double a_data) {
+        this.a_data = a_data;
         this.next = null;
     }
 }
 
 class A_LinkedList {
-    private A_Node head;
+    private A_Node a_head;
 
     A_LinkedList() {
-        this.head = null;
+        this.a_head = null;
     }
 
     // Method to add a new node with given data at the end of the list
-    public void add(double data) {
-        A_Node newNode = new A_Node(data);
+    public void add(double a_data) {
+        A_Node newNode = new A_Node(a_data);
 
-        if (head == null) {
-            head = newNode;
+        if (a_head == null) {
+            a_head = newNode;
         } else {
-            A_Node temp = head;
+            A_Node temp = a_head;
             while (temp.next != null) {
                 temp = temp.next;
             }
@@ -49,16 +49,16 @@ class A_LinkedList {
 
     // Method to delete a node at a specified index
     public void deleteNodeAt(int index) {
-        if (head == null) {
+        if (a_head == null) {
             return;
         }
 
         if (index == 0) {
-            head = head.next;
+            a_head = a_head.next;
             return;
         }
 
-        A_Node temp = head;
+        A_Node temp = a_head;
         A_Node prev = null;
         int count = 0;
 
@@ -76,11 +76,11 @@ class A_LinkedList {
 
     // Method to calculate the sum of all values in the list
     public double sumOfValues() {
-        A_Node temp = head;
+        A_Node temp = a_head;
         double sum = 0.0;
 
         while (temp != null) {
-            sum += temp.data;
+            sum += temp.a_data;
             temp = temp.next;
         }
 
@@ -100,7 +100,7 @@ public class automatic extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manual);
+        setContentView(R.layout.activity_automatic);
 
 
         //For the new window
@@ -125,7 +125,7 @@ public class automatic extends AppCompatActivity {
         startActivity(intent);
     }
     public void openActivity2(){
-        Intent intent = new Intent(this, MainActivity2.class);
+        Intent intent = new Intent(this, summary.class);
         startActivity(intent);
     }
 
@@ -137,8 +137,8 @@ public class automatic extends AppCompatActivity {
         myList.add(t_d);
         double sum = myList.sumOfValues();
 
-        viewT_D.setText(String.format("%.2f",sum));
-        viewT_M.setText(String.format("%.2f",sum*31));
+        viewT_D.setText("₱ "+String.format("%.2f",sum));
+        viewT_M.setText("₱ "+String.format("%.2f",sum*31));
     }
 
     @SuppressLint("DefaultLocale")
@@ -148,8 +148,8 @@ public class automatic extends AppCompatActivity {
 
         double sum = myList.sumOfValues();
 
-        viewT_D.setText(String.format("%.2f",sum));
-        viewT_M.setText(String.format("%.2f",sum*31));
+        viewT_D.setText("₱ "+String.format("%.2f",sum));
+        viewT_M.setText("₱ "+String.format("%.2f",sum*31));
     }
     private void buildDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -176,13 +176,13 @@ public class automatic extends AppCompatActivity {
                 Toast.makeText(automatic.this, "Please input valid values", Toast.LENGTH_SHORT).show();
             } else {
                 try {
-                    // Attempt to convert input to numbers
-                    Double.parseDouble(loadStr);
-                    Double.parseDouble(quantityStr);
-                    Double.parseDouble(hrsDailyStr);
+                    // convert input to numbers
+                    double l = Double.parseDouble(loadStr);
+                    double q = Double.parseDouble(quantityStr);
+                    double h = Double.parseDouble(hrsDailyStr);
 
                     // Adding card if conversion is successful
-                    addCard(nameStr, loadStr, quantityStr, hrsDailyStr);
+                    addCard(nameStr, l, q, h);
                 } catch (NumberFormatException e) {
                     // Show a toast if conversion to numbers fails
                     Toast.makeText(automatic.this, "Please input valid values", Toast.LENGTH_SHORT).show();
@@ -196,29 +196,29 @@ public class automatic extends AppCompatActivity {
         dialog = builder.create();
     }
     @SuppressLint("DefaultLocale")
-    private void addCard(String name, String load, String quantity, String hrsDaily) {
+    private void addCard(String name, double l, double q, double h) {
         @SuppressLint("InflateParams") final View view = getLayoutInflater().inflate(R.layout.card, null);
 
         TextView nameView = view.findViewById(R.id.name);
         TextView loadView = view.findViewById(R.id.load);
         TextView quantityView = view.findViewById(R.id.quantity);
         TextView hrsDailyView = view.findViewById(R.id.hrsDaily);
-
         TextView viewD = view.findViewById(R.id.costDaily);
         TextView viewM = view.findViewById(R.id.costMonthly);
         Button delete = view.findViewById(R.id.delete);
 
+        String str_load = String.valueOf(l);
+        String str_quantity = String.valueOf(q);
+        String str_hrs = String.valueOf(h);
+
+        nameView.setText(name);
+        loadView.setText(str_load);
+        quantityView.setText(str_quantity);
+        hrsDailyView.setText(str_hrs);
+
         int currentIndex = cardIndex;
         ++cardIndex;
 
-        nameView.setText(name);
-        loadView.setText(load);
-        quantityView.setText(quantity);
-        hrsDailyView.setText(hrsDaily);
-
-        double l = Double.parseDouble(String.valueOf(load));
-        double q = Double.parseDouble(String.valueOf(quantity));
-        double h = Double.parseDouble(String.valueOf(hrsDaily));
         double computedDaily = 10 * l / 1000 * q * h;
         double computedMonthly = computedDaily * 31;
 

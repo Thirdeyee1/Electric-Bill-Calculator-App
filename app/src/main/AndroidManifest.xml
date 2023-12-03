@@ -19,7 +19,7 @@
             android:name=".automatic"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".summary"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
