@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".manual"
+    tools:context=".ManualActivity"
     android:background="@drawable/bg6">
     <Button
         android:id="@+id/btnGoBack"
@@ -15,7 +15,7 @@
         android:layout_marginTop="10dp"/>
 
     <RelativeLayout
-
+        android:id="@+id/topCard"
         android:layout_width="match_parent"
         android:layout_marginTop="60dp"
         android:layout_height="180dp">
@@ -43,6 +43,7 @@
                     android:textStyle="bold"
                     android:textSize="20sp" />
                 <TextView
+                    android:id="@+id/sMonthly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_monthly"
@@ -51,11 +52,37 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/total_daily_summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/sDaily"
+                    android:layout_alignBottom="@id/sDaily"
+                    android:layout_marginLeft="10dp"
+                    android:text="Daily"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/total_monthly_summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toEndOf="@id/sMonthly"
+                    android:layout_alignBottom="@id/sMonthly"
+                    android:text="Monthly"
+
+                    android:textSize="20sp" />
+
+
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
 
+
+
     </RelativeLayout>
+
 
     <Button
         android:layout_width="wrap_content"

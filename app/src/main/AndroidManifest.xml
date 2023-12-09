@@ -13,7 +13,7 @@
         android:theme="@style/Theme.SoftDev"
         tools:targetApi="34">
         <activity
-            android:name=".manual"
+            android:name=".ManualActivity"
             android:exported="false" />
         <activity
             android:name=".automatic"

@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         layout.addView(view);
     }
     public void openManual() {
-        Intent intent = new Intent(this, manual.class);
+        Intent intent = new Intent(this, ManualActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
