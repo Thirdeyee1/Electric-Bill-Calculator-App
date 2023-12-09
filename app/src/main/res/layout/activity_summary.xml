@@ -71,15 +71,12 @@
                     android:layout_toEndOf="@id/sMonthly"
                     android:layout_alignBottom="@id/sMonthly"
                     android:text="Monthly"
-
                     android:textSize="20sp" />
 
 
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
-
-
 
     </RelativeLayout>
 
@@ -102,5 +99,16 @@
         android:importantForAccessibility="no">
 
     </ImageView>
+
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_below="@+id/topCard"/>
+
+
 
 </RelativeLayout>

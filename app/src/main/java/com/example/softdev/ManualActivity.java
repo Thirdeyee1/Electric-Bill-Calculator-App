@@ -18,13 +18,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 class Appliance implements Serializable {
     final String name;
     final double load;
     final int quantity;
     final int hrsDaily;
+
 
     Appliance(String name, double load, int quantity, int hrsDaily) {
         this.name = name;
@@ -61,13 +64,13 @@ class TotalManager {
 public class ManualActivity extends AppCompatActivity {
     private final LinkedList<Appliance> appliancesList = new LinkedList<>();
     private final TotalManager totalManager = new TotalManager();
-
     private AlertDialog dialog;
     private LinearLayout layout;
 
     private View exampleSlotView;
     private int cardIndex = 0;
     boolean initialSlotReplaced = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +101,10 @@ public class ManualActivity extends AppCompatActivity {
         });
     }
 
+    public List<Appliance> getAppliancesList() {
+        return appliancesList;
+    }
+
     public void openMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -106,7 +113,7 @@ public class ManualActivity extends AppCompatActivity {
     public void openActivity2() {
         Intent intent = new Intent(this, summary.class);
         intent.putExtra("totalDaily", totalManager.getTotalDaily());
-        intent.putExtra("appliancesList", appliancesList.toArray(new Appliance[0]));
+        intent.putExtra("appliancesList", new ArrayList<>(appliancesList)); // Assuming Appliance implements Serializable
         startActivity(intent);
     }
 
