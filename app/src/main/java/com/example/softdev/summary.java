@@ -15,6 +15,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class summary extends AppCompatActivity {
 
         //Shows the summary from Manual
     public void showSummary(){
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
         List<Appliance> appliancesList = (List<Appliance>) getIntent().getSerializableExtra("appliancesList");
         // Inside the onCreate method, retrieve the values from the intent
         double totalDaily = getIntent().getDoubleExtra("totalDaily", 0.0);
@@ -50,8 +52,8 @@ public class summary extends AppCompatActivity {
         TextView viewT_D = findViewById(R.id.total_daily_summary);
         TextView viewT_M = findViewById(R.id.total_monthly_summary);
 
-        viewT_D.setText(String.format("₱ %.2f", totalDaily));
-        viewT_M.setText(String.format("₱ %.2f", totalMonthly));
+        viewT_D.setText(" ₱ " + decimalFormat.format(totalDaily));
+        viewT_M.setText(" ₱ " + decimalFormat.format(totalMonthly));
 
         // Initialize and populate the bar chart
         displayBarChart(appliancesList);
@@ -66,7 +68,6 @@ public class summary extends AppCompatActivity {
         List<String> labels = new ArrayList<>(); // List to store appliance names
         for (int i = 0; i < appliancesList.size(); i++) {
             Appliance appliance = appliancesList.get(i);
-            entries.add(new BarEntry(i, (float) appliance.getComputedMonthly()));
             entries.add(new BarEntry(i, (float) appliance.getComputedDaily()));
 
             // Add appliance name to the labels list
@@ -93,7 +94,7 @@ public class summary extends AppCompatActivity {
         // Set the BarData to the chart
         barChart.setData(barData);
         barChart.getDescription().setEnabled(false);
-        barChart.getLegend().setEnabled(true);
+        barChart.getLegend().setEnabled(false);
         barChart.invalidate(); // Refresh the chart
     }
 }

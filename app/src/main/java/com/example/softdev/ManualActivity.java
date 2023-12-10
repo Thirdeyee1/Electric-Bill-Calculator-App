@@ -97,6 +97,7 @@ public class ManualActivity extends AppCompatActivity {
         layout = findViewById(R.id.container);
 
         Button setRate = findViewById(R.id.setRate);
+
         // if ma pindot ang set rate button, do the ff:
         setRate.setOnClickListener(v -> {
 
@@ -111,11 +112,9 @@ public class ManualActivity extends AppCompatActivity {
                 return;
             }
 
-
             // set buttons to visible
             add.setVisibility(View.VISIBLE);
             summary.setVisibility(View.VISIBLE);
-
 
             // hide keyboard
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -163,23 +162,23 @@ public class ManualActivity extends AppCompatActivity {
         builder.setTitle("Enter Details");
         builder.setPositiveButton("OK", (dialog, which) -> {
             String nameStr = name.getText().toString();
-            double loadStr = Double.parseDouble(load.getText().toString());
+            String loadStr = load.getText().toString();
             String quantityStr = quantity.getText().toString();
             String hrsDailyStr = hrsDaily.getText().toString();
 
-            if (isEmpty(nameStr) || loadStr == 0 || isEmpty(quantityStr) || isEmpty(hrsDailyStr)) {
+            if (isEmpty(nameStr) || isEmpty(loadStr) || isEmpty(quantityStr) || isEmpty(hrsDailyStr)) {
                 Toast.makeText(ManualActivity.this, "Please input the complete details", Toast.LENGTH_SHORT).show();
             } else if (Integer.parseInt(hrsDailyStr)>24) {
                 Toast.makeText(ManualActivity.this, "Daily use can't be more than 24 Hours!", Toast.LENGTH_SHORT).show();
-            } else if (Integer.parseInt(hrsDailyStr)==0 || loadStr == 0 || Integer.parseInt(quantityStr)==0) {
+            } else if (Integer.parseInt(hrsDailyStr)==0 || Double.parseDouble(loadStr)==0 || Integer.parseInt(quantityStr)==0) {
                 Toast.makeText(ManualActivity.this, "'0' is not a valid value! ", Toast.LENGTH_SHORT).show();
             } else {
                 try {
-                    double l = loadStr;
+                    double l = Double.parseDouble(loadStr);
                     int q = Integer.parseInt(quantityStr);
                     int h = Integer.parseInt(hrsDailyStr);
 
-                    if (powerSwitch.isChecked()) l *= 745.70; // 1hp = 745.7 watts
+                    if (powerSwitch.isChecked()) l *= 745.70 * 0.6125; // 1hp = 745.7 watts x duty cycle factor
 
                     Appliance appliance = new Appliance(nameStr, l, q, h, r);
                     addCard(appliance);

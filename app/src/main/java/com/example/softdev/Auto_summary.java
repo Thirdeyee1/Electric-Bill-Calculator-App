@@ -16,6 +16,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class Auto_summary extends AppCompatActivity {
@@ -41,6 +42,7 @@ public class Auto_summary extends AppCompatActivity {
 
     //Shows the summary from Manual
     public void showSummary(){
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
         List<Auto_Appliance> auto_appliancesList = (List<Auto_Appliance>) getIntent().getSerializableExtra("auto_appliancesList");
         // Inside the onCreate method, retrieve the values from the intent
         double totalDaily = getIntent().getDoubleExtra("totalDaily", 0.0);
@@ -50,8 +52,8 @@ public class Auto_summary extends AppCompatActivity {
         TextView viewT_D = findViewById(R.id.total_daily_summary);
         TextView viewT_M = findViewById(R.id.total_monthly_summary);
 
-        viewT_D.setText(String.format("₱ %.2f", totalDaily));
-        viewT_M.setText(String.format("₱ %.2f", totalMonthly));
+        viewT_D.setText(" ₱ " + decimalFormat.format(totalDaily));
+        viewT_M.setText(" ₱ " + decimalFormat.format(totalMonthly));
 
         // Initialize and populate the bar chart
         displayBarChart(auto_appliancesList);
