@@ -18,7 +18,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class summary extends AppCompatActivity {
+public class Auto_summary extends AppCompatActivity {
     Button back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,27 +26,27 @@ public class summary extends AppCompatActivity {
         setContentView(R.layout.activity_summary);
 
         back = findViewById(R.id.btnGoBack);
-        back.setOnClickListener(v -> openManual());
+        back.setOnClickListener(v -> openAutomatic());
 
         //Shows the summary from manual
         showSummary();
 
 
     }
-    public void openManual() {
-        Intent intent = new Intent(this, ManualActivity.class);
+    public void openAutomatic() {
+        Intent intent = new Intent(this, automatic.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 
-        //Shows the summary from Manual
+    //Shows the summary from Manual
     public void showSummary(){
-        List<Appliance> appliancesList = (List<Appliance>) getIntent().getSerializableExtra("appliancesList");
+        List<Auto_Appliance> auto_appliancesList = (List<Auto_Appliance>) getIntent().getSerializableExtra("auto_appliancesList");
         // Inside the onCreate method, retrieve the values from the intent
         double totalDaily = getIntent().getDoubleExtra("totalDaily", 0.0);
         double totalMonthly = totalDaily * 31;
 
-        // Now you can use these values to update your UI, e.g., set them to TextViews
+// Now you can use these values to update your UI, e.g., set them to TextViews
         TextView viewT_D = findViewById(R.id.total_daily_summary);
         TextView viewT_M = findViewById(R.id.total_monthly_summary);
 
@@ -54,23 +54,22 @@ public class summary extends AppCompatActivity {
         viewT_M.setText(String.format("₱ %.2f", totalMonthly));
 
         // Initialize and populate the bar chart
-        displayBarChart(appliancesList);
+        displayBarChart(auto_appliancesList);
 
     }
     // Display BarChart
-    private void displayBarChart(List<Appliance> appliancesList) {
+    private void displayBarChart(List<Auto_Appliance> auto_appliancesList) {
         BarChart barChart = findViewById(R.id.barChart);
 
-        // Create a list of BarEntry objects for each appliance
+        // Create a list of BarEntry objects for each auto_appliance
         List<BarEntry> entries = new ArrayList<>();
-        List<String> labels = new ArrayList<>(); // List to store appliance names
-        for (int i = 0; i < appliancesList.size(); i++) {
-            Appliance appliance = appliancesList.get(i);
-            entries.add(new BarEntry(i, (float) appliance.getComputedMonthly()));
-            entries.add(new BarEntry(i, (float) appliance.getComputedDaily()));
+        List<String> labels = new ArrayList<>(); // List to store auto_appliance names
+        for (int i = 0; i < auto_appliancesList.size(); i++) {
+            Auto_Appliance auto_appliance = auto_appliancesList.get(i);
+            entries.add(new BarEntry(i, (float) auto_appliance.getComputedDaily()));
 
-            // Add appliance name to the labels list
-            labels.add(appliance.name);
+            // Add auto_appliance name to the labels list
+            labels.add(auto_appliance.name);
         }
 
         // Create a BarDataSet with the entries
@@ -93,7 +92,7 @@ public class summary extends AppCompatActivity {
         // Set the BarData to the chart
         barChart.setData(barData);
         barChart.getDescription().setEnabled(false);
-        barChart.getLegend().setEnabled(true);
+        barChart.getLegend().setEnabled(false);
         barChart.invalidate(); // Refresh the chart
     }
 }

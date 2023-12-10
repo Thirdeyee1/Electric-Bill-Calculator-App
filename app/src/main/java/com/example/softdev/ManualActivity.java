@@ -3,10 +3,12 @@ package com.example.softdev;
 import static android.text.TextUtils.isEmpty;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -18,26 +20,29 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
+
 
 class Appliance implements Serializable {
     final String name;
     final double load;
+    final double rate;
     final int quantity;
     final int hrsDaily;
 
 
-    Appliance(String name, double load, int quantity, int hrsDaily) {
+    Appliance(String name, double load, int quantity, int hrsDaily, String r) {
         this.name = name;
         this.load = load;
         this.quantity = quantity;
         this.hrsDaily = hrsDaily;
+        this.rate = Double.parseDouble(r);
     }
 
     double getComputedDaily() {
-        return 10 * load / 1000 * quantity * hrsDaily;
+        return rate * load / 1000 * quantity * hrsDaily;
     }
 
     double getComputedMonthly() {
@@ -69,6 +74,8 @@ public class ManualActivity extends AppCompatActivity {
 
     private View exampleSlotView;
     private int cardIndex = 0;
+
+    public String r;
     boolean initialSlotReplaced = false;
 
 
@@ -78,6 +85,7 @@ public class ManualActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manual);
 
         Button summary = findViewById(R.id.summary);
+        summary.setVisibility(View.INVISIBLE);
         summary.setOnClickListener(v -> openActivity2());
 
         Button back = findViewById(R.id.btnGoBack1);
@@ -85,24 +93,48 @@ public class ManualActivity extends AppCompatActivity {
 
         // For building dialog
         Button add = findViewById(R.id.add);
+        add.setVisibility(View.INVISIBLE);
         layout = findViewById(R.id.container);
+
+        Button setRate = findViewById(R.id.setRate);
+        // if ma pindot ang set rate button, do the ff:
+        setRate.setOnClickListener(v -> {
+
+            // get rate
+            EditText rate = findViewById(R.id.rateEdit);
+            r = rate.getText().toString();
+
+            // kung ni pindot sa button pero way sulod ang rate, display error nya balik sa top
+            if (r.equals("")) {
+                Toast.makeText(ManualActivity.this, "A value is required!", Toast.LENGTH_SHORT).show();
+                add.setVisibility(View.INVISIBLE);
+                return;
+            }
+
+
+            // set buttons to visible
+            add.setVisibility(View.VISIBLE);
+            summary.setVisibility(View.VISIBLE);
+
+
+            // hide keyboard
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+            // Check if the initial slot has been replaced
+            if (!initialSlotReplaced) {
+                addExampleSlot();
+            }
+        });
+
 
         // Build the dialog
         buildDialog();
-
-        // Check if the initial slot has been replaced
-        if (!initialSlotReplaced) {
-            addExampleSlot();
-        }
 
         add.setOnClickListener(v -> {
             initialSlotReplaced = true;
             dialog.show();
         });
-    }
-
-    public List<Appliance> getAppliancesList() {
-        return appliancesList;
     }
 
     public void openMain() {
@@ -131,21 +163,25 @@ public class ManualActivity extends AppCompatActivity {
         builder.setTitle("Enter Details");
         builder.setPositiveButton("OK", (dialog, which) -> {
             String nameStr = name.getText().toString();
-            String loadStr = load.getText().toString();
+            double loadStr = Double.parseDouble(load.getText().toString());
             String quantityStr = quantity.getText().toString();
             String hrsDailyStr = hrsDaily.getText().toString();
 
-            if (isEmpty(nameStr) || isEmpty(loadStr) || isEmpty(quantityStr) || isEmpty(hrsDailyStr)) {
-                Toast.makeText(ManualActivity.this, "Please input details", Toast.LENGTH_SHORT).show();
+            if (isEmpty(nameStr) || loadStr == 0 || isEmpty(quantityStr) || isEmpty(hrsDailyStr)) {
+                Toast.makeText(ManualActivity.this, "Please input the complete details", Toast.LENGTH_SHORT).show();
+            } else if (Integer.parseInt(hrsDailyStr)>24) {
+                Toast.makeText(ManualActivity.this, "Daily use can't be more than 24 Hours!", Toast.LENGTH_SHORT).show();
+            } else if (Integer.parseInt(hrsDailyStr)==0 || loadStr == 0 || Integer.parseInt(quantityStr)==0) {
+                Toast.makeText(ManualActivity.this, "'0' is not a valid value! ", Toast.LENGTH_SHORT).show();
             } else {
                 try {
-                    double l = Double.parseDouble(loadStr);
+                    double l = loadStr;
                     int q = Integer.parseInt(quantityStr);
                     int h = Integer.parseInt(hrsDailyStr);
 
-                    if (powerSwitch.isChecked()) l *= 745.7;
+                    if (powerSwitch.isChecked()) l *= 745.70; // 1hp = 745.7 watts
 
-                    Appliance appliance = new Appliance(nameStr, l, q, h);
+                    Appliance appliance = new Appliance(nameStr, l, q, h, r);
                     addCard(appliance);
                 } catch (NumberFormatException e) {
                     Toast.makeText(ManualActivity.this, "Please input valid values", Toast.LENGTH_SHORT).show();
@@ -160,8 +196,9 @@ public class ManualActivity extends AppCompatActivity {
 
     @SuppressLint("DefaultLocale")
     private void addCard(Appliance appliance) {
-        removeExampleSlot();
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
 
+        removeExampleSlot();
         @SuppressLint("InflateParams") final View view = getLayoutInflater().inflate(R.layout.card, null);
 
         TextView nameView = view.findViewById(R.id.name);
@@ -173,13 +210,13 @@ public class ManualActivity extends AppCompatActivity {
         Button delete = view.findViewById(R.id.delete);
 
         nameView.setText(appliance.name);
-        loadView.setText(String.valueOf(appliance.load));
+        loadView.setText(String.format("%.1f", appliance.load));
         quantityView.setText(String.valueOf(appliance.quantity));
         hrsDailyView.setText(String.valueOf(appliance.hrsDaily));
 
         final int index = cardIndex;
         ++cardIndex;
-// Set the index as a tag
+        // Set the index as a tag
         view.setTag(index);
 
         double computedDaily = appliance.getComputedDaily();
@@ -187,8 +224,8 @@ public class ManualActivity extends AppCompatActivity {
 
         totalManager.addCost(computedDaily);
 
-        viewD.setText(String.format("%.2f", computedDaily));
-        viewM.setText(String.format("%.2f", computedMonthly));
+        viewD.setText(" ₱ " + decimalFormat.format(computedDaily));
+        viewM.setText(" ₱ " + decimalFormat.format(computedMonthly));
 
         delete.setOnClickListener(v -> {
             layout.removeView(view);
@@ -219,13 +256,12 @@ public class ManualActivity extends AppCompatActivity {
         appliancesList.add(appliance);
         layout.addView(view);
         writeTotal();
-
-
     }
 
 
         @SuppressLint("DefaultLocale")
     public void writeTotal() {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
         runOnUiThread(() -> {
             TextView viewT_D = findViewById(R.id.total_daily);
             TextView viewT_M = findViewById(R.id.total_monthly);
@@ -233,8 +269,8 @@ public class ManualActivity extends AppCompatActivity {
             double totalDaily = totalManager.getTotalDaily();
             System.out.println("Updated total daily: " + totalDaily);
 
-            viewT_D.setText(String.format("₱ %.2f", totalDaily));
-            viewT_M.setText(String.format("₱ %.2f", totalDaily * 31));
+            viewT_D.setText("₱ " + decimalFormat.format(totalDaily));
+            viewT_M.setText("₱ " + decimalFormat.format(totalDaily*31));
         });
     }
 
@@ -247,6 +283,7 @@ public class ManualActivity extends AppCompatActivity {
 
     @SuppressLint("DefaultLocale")
     private View createAndAddSlot(String name, String load, String quantity, String hrsDaily) {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
         @SuppressLint("InflateParams") View exampleSlotView = getLayoutInflater().inflate(R.layout.card, null);
 
         TextView nameView = exampleSlotView.findViewById(R.id.name);
@@ -264,21 +301,21 @@ public class ManualActivity extends AppCompatActivity {
         double l = Double.parseDouble(load);
         double q = Double.parseDouble(quantity);
         double h = Double.parseDouble(hrsDaily);
-        double computedDaily = 11.85 * l / 1000 * q * h;
+        double computedDaily = Double.parseDouble(r) * l / 1000 * q * h;
         double computedMonthly = computedDaily * 31;
 
-        viewD.setText(String.format("%.2f", computedDaily));
-        viewM.setText(String.format("%.2f", computedMonthly));
+        viewD.setText(" ₱ " + decimalFormat.format(computedDaily));
+        viewM.setText(" ₱ " + decimalFormat.format(computedMonthly));
 
         layout.addView(exampleSlotView);
         return exampleSlotView;
     }
 
     private void addExampleSlot() {
-        String exampleName = "Example Device";
-        String exampleLoad = "100";
-        String exampleQuantity = "2";
-        String exampleHrsDaily = "4";
+        String exampleName = "Fan (example device)";
+        String exampleLoad = "25";
+        String exampleQuantity = "1";
+        String exampleHrsDaily = "12";
 
         exampleSlotView = createAndAddSlot(exampleName, exampleLoad, exampleQuantity, exampleHrsDaily);
     }

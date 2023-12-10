@@ -9,6 +9,33 @@
     tools:context=".ManualActivity"
     android:background="@drawable/bg6">
 
+    <EditText
+        android:id="@+id/rateEdit"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="195dp"
+        android:backgroundTint="#FFFFFF"
+        android:cursorVisible="false"
+        android:hint="₱ 11.85"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:maxLength="30"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/setRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="202dp"
+        android:layout_marginTop="195dp"
+        android:text="Set Electricity Rate" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

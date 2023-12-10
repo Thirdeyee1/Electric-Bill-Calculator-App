@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".manual"
+    tools:context=".ManualActivity"
     android:background="@drawable/bg6">
 
     <RelativeLayout
@@ -15,6 +15,7 @@
         android:layout_marginTop="60dp">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/total_card"
             android:layout_width="391dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -111,7 +112,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="21dp"
         android:layout_marginEnd="51dp"
-        android:layout_marginBottom="11dp"
+        android:layout_marginBottom="12dp"
         android:layout_toEndOf="@+id/summary"
         android:text="@string/button_add_appliance" />
 

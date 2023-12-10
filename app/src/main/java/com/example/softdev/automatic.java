@@ -1,159 +1,116 @@
 package com.example.softdev;
 
-import static android.text.TextUtils.*;
+import static android.text.TextUtils.isEmpty;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-class A_Node {
-    final double a_data;
-    A_Node next;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
-    A_Node(double a_data) {
-        this.a_data = a_data;
-        this.next = null;
+class Auto_Appliance implements Serializable {
+    final String name;
+    final double load;
+    final int quantity;
+    final int hrsDaily;
+
+
+    Auto_Appliance(String name, double load, int quantity, int hrsDaily) {
+        this.name = name;
+        this.load = Math.round(load * 100.0) / 100.0;
+        this.quantity = quantity;
+        this.hrsDaily = hrsDaily;
+    }
+
+    double getComputedDaily() {
+        return 10 * load / 1000 * quantity * hrsDaily;
+    }
+
+    double getComputedMonthly() {
+        return getComputedDaily() * 31;
     }
 }
 
-class A_LinkedList {
-    private A_Node a_head;
+class Auto_TotalManager {
+    private double totalDaily = 0.0;
 
-    A_LinkedList() {
-        this.a_head = null;
+    void addCost(double cost) {
+        totalDaily += cost;
     }
 
-    // Method to add a new node with given data at the end of the list
-    public void add(double a_data) {
-        A_Node newNode = new A_Node(a_data);
-
-        if (a_head == null) {
-            a_head = newNode;
-        } else {
-            A_Node temp = a_head;
-            while (temp.next != null) {
-                temp = temp.next;
-            }
-            temp.next = newNode;
-        }
+    void subtractCost(double cost) {
+        totalDaily -= cost;
     }
 
-    // Method to delete a node at a specified index
-    public void deleteNodeAt(int index) {
-        if (a_head == null) {
-            return;
-        }
-
-        if (index == 0) {
-            a_head = a_head.next;
-            return;
-        }
-
-        A_Node temp = a_head;
-        A_Node prev = null;
-        int count = 0;
-
-        while (temp != null) {
-            if (count == index) {
-                prev.next = temp.next;
-                return;
-            }
-            prev = temp;
-            temp = temp.next;
-            count++;
-        }
-
-    }
-
-    // Method to calculate the sum of all values in the list
-    public double sumOfValues() {
-        A_Node temp = a_head;
-        double sum = 0.0;
-
-        while (temp != null) {
-            sum += temp.a_data;
-            temp = temp.next;
-        }
-
-        return sum;
+    double getTotalDaily() {
+        return totalDaily;
     }
 }
 
 public class automatic extends AppCompatActivity {
-    final A_LinkedList myList = new A_LinkedList();
+    private final LinkedList<Auto_Appliance> auto_appliancesList = new LinkedList<>();
+    private final Auto_TotalManager totalManager = new Auto_TotalManager();
+    private AlertDialog dialog;
+    private LinearLayout layout;
 
-    Button add;
-    AlertDialog dialog;
-    LinearLayout layout;
-
+    private View exampleSlotView;
     private int cardIndex = 0;
+    boolean initialSlotReplaced = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_automatic);
 
-
-        //For the new window
         Button summary = findViewById(R.id.summary);
         summary.setOnClickListener(v -> openActivity2());
 
         Button back = findViewById(R.id.btnGoBack1);
         back.setOnClickListener(v -> openMain());
 
-        //For building dialog
-        add = findViewById(R.id.add);
+        // For building dialog
+        Button add = findViewById(R.id.add);
         layout = findViewById(R.id.container);
 
         // Build the dialog
         buildDialog();
 
-
-        add.setOnClickListener(v -> dialog.show());
+        add.setOnClickListener(v -> {
+            initialSlotReplaced = true;
+            dialog.show();
+        });
     }
-    public void openMain(){
+
+    public void openMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-    public void openActivity2(){
-        Intent intent = new Intent(this, summary.class);
+
+    public void openActivity2() {
+        Intent intent = new Intent(this, Auto_summary.class);
+        intent.putExtra("totalDaily", totalManager.getTotalDaily());
+        intent.putExtra("auto_appliancesList", new ArrayList<>(auto_appliancesList)); // Assuming Auto_Appliance implements Serializable
         startActivity(intent);
     }
 
-    @SuppressLint("DefaultLocale")
-    public void writeTotal(Double t_d){
-        TextView viewT_D = findViewById(R.id.total_daily);
-        TextView viewT_M = findViewById(R.id.total_monthly);
-
-        myList.add(t_d);
-        double sum = myList.sumOfValues();
-
-        viewT_D.setText("₱ "+String.format("%.2f",sum));
-        viewT_M.setText("₱ "+String.format("%.2f",sum*31));
-    }
-
-    @SuppressLint("DefaultLocale")
-    public void writeTotal(){
-        TextView viewT_D = findViewById(R.id.total_daily);
-        TextView viewT_M = findViewById(R.id.total_monthly);
-
-        double sum = myList.sumOfValues();
-
-        viewT_D.setText("₱ "+String.format("%.2f",sum));
-        viewT_M.setText("₱ "+String.format("%.2f",sum*31));
-    }
     private void buildDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog, null);
+        Switch powerSwitch = view.findViewById(R.id.power_type);
 
         final EditText name = view.findViewById(R.id.nameEdit);
         final EditText load = view.findViewById(R.id.loadEdit);
@@ -169,34 +126,37 @@ public class automatic extends AppCompatActivity {
             String hrsDailyStr = hrsDaily.getText().toString();
 
             if (isEmpty(nameStr) || isEmpty(loadStr) || isEmpty(quantityStr) || isEmpty(hrsDailyStr)) {
-                Toast.makeText(automatic.this, "Please input details", Toast.LENGTH_SHORT).show();}
-            else if (isEmpty(nameStr)) {
-                Toast.makeText(automatic.this, "Please input Device name", Toast.LENGTH_SHORT).show();
-            } else if (isEmpty(loadStr) || isEmpty(quantityStr) || isEmpty(hrsDailyStr)){
-                Toast.makeText(automatic.this, "Please input valid values", Toast.LENGTH_SHORT).show();
+                Toast.makeText(automatic.this, "Please input details", Toast.LENGTH_SHORT).show();
+            } else if (Integer.parseInt(hrsDailyStr)>24) {
+                Toast.makeText(automatic.this, "Daily use can't be more than 24 Hours!", Toast.LENGTH_SHORT).show();
+            } else if (Integer.parseInt(hrsDailyStr)==0 || Integer.parseInt(loadStr)==0 || Integer.parseInt(quantityStr)==0) {
+                Toast.makeText(automatic.this, "'0' is not a valid value! ", Toast.LENGTH_SHORT).show();
             } else {
                 try {
-                    // convert input to numbers
                     double l = Double.parseDouble(loadStr);
-                    double q = Double.parseDouble(quantityStr);
-                    double h = Double.parseDouble(hrsDailyStr);
+                    int q = Integer.parseInt(quantityStr);
+                    int h = Integer.parseInt(hrsDailyStr);
 
-                    // Adding card if conversion is successful
-                    addCard(nameStr, l, q, h);
+                    if (powerSwitch.isChecked()) l *= 745.7;
+
+
+                    Auto_Appliance auto_appliance = new Auto_Appliance(nameStr, l, q, h);
+                    addCard(auto_appliance);
                 } catch (NumberFormatException e) {
-                    // Show a toast if conversion to numbers fails
                     Toast.makeText(automatic.this, "Please input valid values", Toast.LENGTH_SHORT).show();
                 }
             }
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> {
-
         });
 
         dialog = builder.create();
     }
+
     @SuppressLint("DefaultLocale")
-    private void addCard(String name, double l, double q, double h) {
+    private void addCard(Auto_Appliance auto_appliance) {
+        removeExampleSlot();
+
         @SuppressLint("InflateParams") final View view = getLayoutInflater().inflate(R.layout.card, null);
 
         TextView nameView = view.findViewById(R.id.name);
@@ -207,35 +167,77 @@ public class automatic extends AppCompatActivity {
         TextView viewM = view.findViewById(R.id.costMonthly);
         Button delete = view.findViewById(R.id.delete);
 
-        String str_load = String.valueOf(l);
-        String str_quantity = String.valueOf(q);
-        String str_hrs = String.valueOf(h);
+        nameView.setText(auto_appliance.name);
+        loadView.setText(String.valueOf(auto_appliance.load));
+        quantityView.setText(String.valueOf(auto_appliance.quantity));
+        hrsDailyView.setText(String.valueOf(auto_appliance.hrsDaily));
 
-        nameView.setText(name);
-        loadView.setText(str_load);
-        quantityView.setText(str_quantity);
-        hrsDailyView.setText(str_hrs);
-
-        int currentIndex = cardIndex;
+        final int index = cardIndex;
         ++cardIndex;
+// Set the index as a tag
+        view.setTag(index);
 
-        double computedDaily = 10 * l / 1000 * q * h;
-        double computedMonthly = computedDaily * 31;
+        double computedDaily = auto_appliance.getComputedDaily();
+        double computedMonthly = auto_appliance.getComputedMonthly();
 
-        writeTotal(computedDaily);
+        totalManager.addCost(computedDaily);
 
-        viewD.setText(String.format("%.2f",computedDaily));
-        viewM.setText(String.format("%.2f",computedMonthly));
+        viewD.setText(String.format("%.2f", computedDaily));
+        viewM.setText(String.format("%.2f", computedMonthly));
 
         delete.setOnClickListener(v -> {
             layout.removeView(view);
-            myList.deleteNodeAt(currentIndex); // Pass the index of the deleted card
-            --cardIndex;
-            writeTotal();
-        });
+            int removedIndex = (int) view.getTag(); // Get the index from the tag
 
+            // Ensure index is within valid bounds
+            if (removedIndex >= 0 && removedIndex < auto_appliancesList.size()) {
+                auto_appliancesList.remove(removedIndex);
+                totalManager.subtractCost(computedDaily);
+
+                // Update tags for the remaining views
+                for (int i = removedIndex; i < layout.getChildCount(); i++) {
+                    View childView = layout.getChildAt(i);
+                    int currentIndex = (int) childView.getTag();
+                    childView.setTag(currentIndex - 1);
+                }
+                if (auto_appliancesList.isEmpty()) {
+                    // Reset count to 0 if all indices are deleted
+                    cardIndex = 0;
+                }
+                writeTotal();
+            } else {
+                // Handle invalid index
+                Toast.makeText(automatic.this, "Invalid index", Toast.LENGTH_SHORT).show();
+                // You can also log the issue for debugging purposes
+                Log.e("Automatic", "Invalid index: " + removedIndex);
+            }
+        });
+        auto_appliancesList.add(auto_appliance);
         layout.addView(view);
+        writeTotal();
+
+
     }
 
 
+    @SuppressLint("DefaultLocale")
+    public void writeTotal() {
+        runOnUiThread(() -> {
+            TextView viewT_D = findViewById(R.id.total_daily);
+            TextView viewT_M = findViewById(R.id.total_monthly);
+
+            double totalDaily = totalManager.getTotalDaily();
+            System.out.println("Updated total daily: " + totalDaily);
+
+            viewT_D.setText(String.format("₱ %.2f", totalDaily));
+            viewT_M.setText(String.format("₱ %.2f", totalDaily * 31));
+        });
+    }
+
+    private void removeExampleSlot() {
+        if (exampleSlotView != null) {
+            layout.removeView(exampleSlotView);
+            exampleSlotView = null;
+        }
+    }
 }
