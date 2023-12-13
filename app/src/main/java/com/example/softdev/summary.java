@@ -1,6 +1,7 @@
 package com.example.softdev;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -8,11 +9,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.DecimalFormat;
@@ -90,6 +94,23 @@ public class summary extends AppCompatActivity {
 
         // Set custom labels for the X-axis
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+
+        // Customize the Y-axis (left)
+        YAxis leftAxis = barChart.getAxisLeft();
+        // Use a custom ValueFormatter to display peso sign and numbers
+        leftAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getAxisLabel(float value, AxisBase axis) {
+                return "₱" + value; // Add peso sign to the label
+            }
+        });
+
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setTextSize(12f); // Adjust text size if needed
+        leftAxis.setAxisMinimum(0f); // Set the minimum value for the Y-axis
+
+        // Set the number of labels on the Y-axis
+        leftAxis.setLabelCount(labels.size(), false); // Set to true if you want to force a specific number of labels
 
         // Set the BarData to the chart
         barChart.setData(barData);

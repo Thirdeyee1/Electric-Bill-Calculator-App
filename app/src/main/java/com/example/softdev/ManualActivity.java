@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -101,16 +102,30 @@ public class ManualActivity extends AppCompatActivity {
         // if ma pindot ang set rate button, do the ff:
         setRate.setOnClickListener(v -> {
 
+            removeExampleSlot();
             // get rate
             EditText rate = findViewById(R.id.rateEdit);
             r = rate.getText().toString();
 
+            double Rate = 11.85;
             // kung ni pindot sa button pero way sulod ang rate, display error nya balik sa top
-            if (r.equals("")) {
-                Toast.makeText(ManualActivity.this, "A value is required!", Toast.LENGTH_SHORT).show();
-                add.setVisibility(View.INVISIBLE);
-                return;
+            if (r.isEmpty()) {
+                r = String.valueOf(Rate);
+                rate.setHintTextColor(ContextCompat.getColor(ManualActivity.this, android.R.color.white)); // Set hint color to solid white
+                Toast.makeText(ManualActivity.this, "Using this rate 11.85", Toast.LENGTH_SHORT).show();
+            } else {
+                try {
+                    Rate = Double.parseDouble(r);
+                    rate.setText(String.format("₱ %.2f", Rate)); // Set text to ₱ user_input
+                    rate.setTextColor(ContextCompat.getColor(ManualActivity.this, android.R.color.white)); // Set text color to solid white
+                    rate.setHint(""); // Clear hint
+                } catch (NumberFormatException e) {
+                    // Handle the case where the input is not a valid number
+                    Toast.makeText(ManualActivity.this, "Invalid input for rate!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
+
 
             // set buttons to visible
             add.setVisibility(View.VISIBLE);

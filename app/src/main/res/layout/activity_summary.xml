@@ -100,15 +100,26 @@
 
     </ImageView>
 
-
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_below="@+id/topCard"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/topCard"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp">
 
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_height="285dp"
+            android:layout_below="@+id/topCard"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp" />
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>
