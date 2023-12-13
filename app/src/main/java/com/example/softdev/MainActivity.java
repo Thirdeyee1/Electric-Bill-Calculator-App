@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     HorizontalScrollView scrollView;
     int currentCardIndex = 0;
     final int totalCards = 4;
-    final int scrollDelay = 3000; // 3 seconds
+    final int scrollDelay = 8000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

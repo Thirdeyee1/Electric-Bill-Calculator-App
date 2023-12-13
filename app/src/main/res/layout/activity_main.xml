@@ -2,6 +2,7 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/buttonA"
         android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:text="@string/toAuto" />
 
     <HorizontalScrollView
@@ -41,5 +43,19 @@
         </LinearLayout>
 
     </HorizontalScrollView>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="170dp"
+        android:layout_height="147dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="126dp"
+        android:layout_marginEnd="121dp"
+        android:layout_marginBottom="458dp"
+        app:srcCompat="@drawable/icon" />
 
 </RelativeLayout>
