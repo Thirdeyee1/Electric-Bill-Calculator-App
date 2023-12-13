@@ -24,21 +24,22 @@
         android:layout_centerInParent="true"
         android:text="@string/toAuto" />
 
-    <ScrollView
-
+    <HorizontalScrollView
+        android:id="@+id/horizontal_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="283dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/buttonA"
         android:layout_marginTop="20dp"
-
         android:layout_marginBottom="40dp"
         android:scrollbars="none">
+
         <LinearLayout
             android:id="@+id/tip_box"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
         </LinearLayout>
-    </ScrollView>
+
+    </HorizontalScrollView>
 
 </RelativeLayout>
