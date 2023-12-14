@@ -1,13 +1,20 @@
 package com.example.softdev;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -20,12 +27,20 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class summary extends AppCompatActivity {
-    Button back;
+    static Button back;
+    Button export;
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] permissionstorage = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +49,18 @@ public class summary extends AppCompatActivity {
         back = findViewById(R.id.btnGoBack);
         back.setOnClickListener(v -> openManual());
 
+        verifystoragepermissions(this);
+        export = findViewById(R.id.Export);
+        export.setOnClickListener(v -> {
+            Toast.makeText(summary.this, "You just Captured a Screenshot," +
+                    " Open Gallery/ File Storage to view your captured Screenshot", Toast.LENGTH_SHORT).show();
+            captureAndSaveScreen(getWindow().getDecorView().getRootView(), "result");
+        });
+
         //Shows the summary from manual
         showSummary();
         displayComparisonText();
+
 
 
     }
@@ -52,7 +76,7 @@ public class summary extends AppCompatActivity {
         List<Appliance> appliancesList = (List<Appliance>) getIntent().getSerializableExtra("appliancesList");
         // Inside the onCreate method, retrieve the values from the intent
         double totalDaily = getIntent().getDoubleExtra("totalDaily", 0.0);
-        double totalMonthly = totalDaily * 29.531;
+        double totalMonthly = totalDaily * 31;
 
         // Now you can use these values to update your UI, e.g., set them to TextViews
         TextView viewT_D = findViewById(R.id.total_daily_summary);
@@ -62,7 +86,6 @@ public class summary extends AppCompatActivity {
         viewT_M.setText(" ₱ " + decimalFormat.format(totalMonthly));
 
         // Initialize and populate the bar chart
-        assert appliancesList != null;
         displayBarChart(appliancesList);
 
     }
@@ -139,14 +162,12 @@ public class summary extends AppCompatActivity {
 
         // Get the user's daily consumption from the intent
         double userDailyConsumption = getIntent().getDoubleExtra("totalDaily", 0.0);
-        double rate = getIntent().getDoubleExtra("rate", 0.0);
-        double userDailyConsumptionKWR = userDailyConsumption / rate;
 
         // Define the average Filipino household electricity consumption rate
-        double averageHouseholdRate = 7.145; // avg daily kWh usage per pinoy household
+        double averageHouseholdRate = 9.7545; // PHP per kWh
 
         // Calculate the comparison
-        double percentageDifference = ((averageHouseholdRate - userDailyConsumptionKWR) / averageHouseholdRate) * 100;
+        double percentageDifference = ((averageHouseholdRate - userDailyConsumption) / averageHouseholdRate) * 100;
 
         // Build the comparison text
         String comparison = "Your daily consumption is ";
@@ -165,4 +186,58 @@ public class summary extends AppCompatActivity {
         // Add the TextView to the layout
         summaryLayout.addView(comparisonText);
     }
+
+    // Add a new method to capture and save the screen content
+      protected File captureAndSaveScreen(View view, String filename) {
+        // Hide the button before capturing the screen
+        back.setVisibility(View.INVISIBLE);
+        export.setVisibility(View.INVISIBLE);
+
+
+          Date date = new Date();
+
+          // Here we are initialising the format of our image name
+          CharSequence format = android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", date);
+          try {
+              // Initialising the directory of storage
+              String dirpath = Environment.getExternalStorageDirectory() + "";
+              File file = new File(dirpath);
+              if (!file.exists()) {
+                  boolean mkdir = file.mkdir();
+              }
+
+              // File name
+              String path = dirpath + "/" + filename + "-" + format + ".jpeg";
+              view.setDrawingCacheEnabled(true);
+              Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+              view.setDrawingCacheEnabled(false);
+              File imageurl = new File(path);
+              FileOutputStream outputStream = new FileOutputStream(imageurl);
+              bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
+              outputStream.flush();
+              outputStream.close();
+
+              return imageurl;
+
+          } catch (FileNotFoundException io) {
+              io.printStackTrace();
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+          back.setVisibility(View.VISIBLE);
+          export.setVisibility(View.VISIBLE);
+          return null;
+      }
+
+    // verifying if storage permission is given or not
+    public static void verifystoragepermissions(Activity activity) {
+
+        int permissions = ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        // If storage permission is not given then request for External Storage Permission
+        if (permissions != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, permissionstorage, REQUEST_EXTERNAL_STORAGE);
+        }
+    }
 }
+
