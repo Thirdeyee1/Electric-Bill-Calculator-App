@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button goManual = findViewById(R.id.buttonA);
-        Button goAutomatic = findViewById(R.id.buttonB);
+        ImageButton goManual = findViewById(R.id.buttonA);
+        ImageButton goAutomatic = findViewById(R.id.buttonB);
 
         goManual.setOnClickListener(v -> openManual());
         goAutomatic.setOnClickListener(v -> openAutomatic());
@@ -44,12 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void startCardScrolling() {
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                scrollNextCard();
-                startCardScrolling();
-            }
+        handler.postDelayed(() -> {
+            scrollNextCard();
+            startCardScrolling();
         }, scrollDelay);
     }
 
