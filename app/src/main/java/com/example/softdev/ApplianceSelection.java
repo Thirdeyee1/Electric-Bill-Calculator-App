@@ -1,6 +1,9 @@
 package com.example.softdev;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,10 +19,14 @@ public class ApplianceSelection extends AppCompatActivity {
     private List<DataModel> mList;
     private ItemAdapter adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.appliance_selection);
+
+        Button back2 = findViewById(R.id.btnGoBack2);
+        back2.setOnClickListener(v -> auto());
 
         recyclerView = findViewById(R.id.main_recycler);
         recyclerView.setHasFixedSize(true);
@@ -128,5 +135,11 @@ public class ApplianceSelection extends AppCompatActivity {
 
         adapter = new ItemAdapter(mList);
         recyclerView.setAdapter(adapter);
+    }
+
+    public void auto(){
+        Intent intent = new Intent(this, automatic.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
     }
 }

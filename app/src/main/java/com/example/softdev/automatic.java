@@ -89,6 +89,7 @@ public class automatic extends AppCompatActivity {
         Button back = findViewById(R.id.btnGoBack1);
         back.setOnClickListener(v -> openMain());
 
+
         // For building dialog
         Button add = findViewById(R.id.add);
         add.setVisibility(View.INVISIBLE);
@@ -125,6 +126,11 @@ public class automatic extends AppCompatActivity {
 
     public void openMain() {
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void auto() {
+        Intent intent = new Intent(this, automatic.class);
         startActivity(intent);
     }
 
