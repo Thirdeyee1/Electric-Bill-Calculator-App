@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +36,7 @@ public class summary extends AppCompatActivity {
 
         //Shows the summary from manual
         showSummary();
+        displayComparisonText();
 
 
     }
@@ -118,4 +120,47 @@ public class summary extends AppCompatActivity {
         barChart.getLegend().setEnabled(false);
         barChart.invalidate(); // Refresh the chart
     }
+
+    private void displayComparisonText() {
+        LinearLayout summaryLayout = findViewById(R.id.summaryLayout);
+
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
+        //TextView for displaying the comparison text
+        TextView comparisonText = new TextView(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(0, 20, 0, 0); // Adjust margins as needed
+        comparisonText.setLayoutParams(params);
+        comparisonText.setTextColor(Color.WHITE); // Adjust text color
+        comparisonText.setTextSize(20f); // Adjust text size
+
+        // Get the user's daily consumption from the intent
+        double userDailyConsumption = getIntent().getDoubleExtra("totalDaily", 0.0);
+
+        // Define the average Filipino household electricity consumption rate
+        double averageHouseholdRate = 9.7545; // PHP per kWh
+
+        // Calculate the comparison
+        double percentageDifference = ((averageHouseholdRate - userDailyConsumption) / averageHouseholdRate) * 100;
+
+        // Build the comparison text
+        String comparison = "Your daily consumption is ";
+        if (percentageDifference > 0) {
+            comparison += decimalFormat.format(percentageDifference) + "% lower";
+        } else if (percentageDifference < 0) {
+            comparison += decimalFormat.format(-percentageDifference) + "% higher";
+        } else {
+            comparison += "equal to";
+        }
+        comparison += " than the average Filipino household.";
+
+        // Set the comparison text to the TextView
+        comparisonText.setText(comparison);
+
+        // Add the TextView to the layout
+        summaryLayout.addView(comparisonText);
+    }
+
 }
