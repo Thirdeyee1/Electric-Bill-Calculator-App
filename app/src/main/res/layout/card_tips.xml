@@ -5,10 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="162dp">
+        android:layout_height="121dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
@@ -21,12 +20,13 @@
             app:cardElevation="10dp">
 
             <RelativeLayout
-                android:layout_width="396dp"
-                android:layout_height="146dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tip_1"
+                    android:layout_width="353dp"
                     android:layout_height="wrap_content"
                     android:text="@string/tip_1"
                     android:textColor="@android:color/black"

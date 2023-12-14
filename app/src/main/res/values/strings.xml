@@ -23,12 +23,9 @@
     <string name="label_quantity">Unit(s)</string>
     <string name="label_hour">hr(s)</string>
 
-    <string name="tip_1">Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-        ea commodo consequat. Duis aute irure dolor in reprehenderit
-        in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint</string>
-
+    <string name="tip_1">To save the most energy, switch off the power point rather than leave appliances on standby.</string>
+    <string name="tip_2">Turn off your heater, cooling units and appliances when you go to bed or leave the house.</string>
+    <string name="tip_3">Switch off your computer and equipment such as printers or Wi-Fi routers overnight or when you\'re away.</string>
+    <string name="tip_4">To save the most energy, switch off the power point rather than leave appliances on standby.</string>
+    <string name="tip_5">To save the most energy, switch off the power point rather than leave appliances on standby.</string>
 </resources>
