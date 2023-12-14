@@ -47,7 +47,7 @@ class Appliance implements Serializable {
     }
 
     double getComputedMonthly() {
-        return getComputedDaily() * 31;
+        return getComputedDaily() * 29.531;
     }
 }
 
@@ -108,7 +108,6 @@ public class ManualActivity extends AppCompatActivity {
             r = rate.getText().toString();
 
             double Rate = 11.85;
-            // kung ni pindot sa button pero way sulod ang rate, display error nya balik sa top
             if (r.isEmpty()) {
                 r = String.valueOf(Rate);
                 rate.setHintTextColor(ContextCompat.getColor(ManualActivity.this, android.R.color.white)); // Set hint color to solid white
@@ -158,6 +157,7 @@ public class ManualActivity extends AppCompatActivity {
 
     public void openActivity2() {
         Intent intent = new Intent(this, summary.class);
+        intent.putExtra("rate", Double.parseDouble(r));
         intent.putExtra("totalDaily", totalManager.getTotalDaily());
         intent.putExtra("appliancesList", new ArrayList<>(appliancesList)); // Assuming Appliance implements Serializable
         startActivity(intent);
@@ -193,7 +193,7 @@ public class ManualActivity extends AppCompatActivity {
                     int q = Integer.parseInt(quantityStr);
                     int h = Integer.parseInt(hrsDailyStr);
 
-                    if (powerSwitch.isChecked()) l *= 745.70 * 0.6125; // 1hp = 745.7 watts x duty cycle factor
+                    if (powerSwitch.isChecked()) l *= 745.70 * 0.6125; // 1hp = 745.7 watts x avg duty cycle factor
 
                     Appliance appliance = new Appliance(nameStr, l, q, h, r);
                     addCard(appliance);
@@ -284,7 +284,7 @@ public class ManualActivity extends AppCompatActivity {
             System.out.println("Updated total daily: " + totalDaily);
 
             viewT_D.setText("₱ " + decimalFormat.format(totalDaily));
-            viewT_M.setText("₱ " + decimalFormat.format(totalDaily*31));
+            viewT_M.setText("₱ " + decimalFormat.format(totalDaily*29.531));
         });
     }
 
@@ -315,8 +315,8 @@ public class ManualActivity extends AppCompatActivity {
         double l = Double.parseDouble(load);
         double q = Double.parseDouble(quantity);
         double h = Double.parseDouble(hrsDaily);
-        double computedDaily = Double.parseDouble(r) * l / 1000 * q * h;
-        double computedMonthly = computedDaily * 31;
+        double computedDaily = Double.parseDouble(r) * l / 1000 * q * h; // daily php computation
+        double computedMonthly = computedDaily * 29.531;
 
         viewD.setText(" ₱ " + decimalFormat.format(computedDaily));
         viewM.setText(" ₱ " + decimalFormat.format(computedMonthly));

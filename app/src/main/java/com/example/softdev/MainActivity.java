@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout layout;
     HorizontalScrollView scrollView;
     int currentCardIndex = 0;
-    final int totalCards = 4;
-    final int scrollDelay = 8000;
+    final int totalCards = 10;
+    final int scrollDelay = 6000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
         // Start scrolling handler
         startCardScrolling();
     }
+    @SuppressLint("DefaultLocale")
+    private void addCard(int tipNumber) {
+        @SuppressLint("InflateParams") final View view = getLayoutInflater().inflate(R.layout.card_tips, null);
+        TextView tipView = view.findViewById(R.id.tip_1); // Use the static ID
+        tipView.setText(getString(getResources().getIdentifier("tip_" + tipNumber, "string", getPackageName())));
+        layout.addView(view);
+    }
 
     private void startCardScrolling() {
         Handler handler = new Handler();
@@ -53,17 +60,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void scrollNextCard() {
         currentCardIndex = (currentCardIndex + 1) % totalCards;
-        int scrollX = currentCardIndex * scrollView.getWidth();
+        int scrollX = currentCardIndex * scrollView.getWidth(); // Adjusting for centering
         scrollView.smoothScrollTo(scrollX, 0);
     }
 
-    @SuppressLint("DefaultLocale")
-    private void addCard(int tipNumber) {
-        @SuppressLint("InflateParams") final View view = getLayoutInflater().inflate(R.layout.card_tips, null);
-        TextView tipView = view.findViewById(R.id.tip_1); // Use the static ID
-        tipView.setText(getString(getResources().getIdentifier("tip_" + tipNumber, "string", getPackageName())));
-        layout.addView(view);
-    }
+
 
     public void openManual() {
         Intent intent = new Intent(this, ManualActivity.class);

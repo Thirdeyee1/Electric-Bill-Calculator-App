@@ -40,7 +40,7 @@ class Auto_Appliance implements Serializable {
     }
 
     double getComputedMonthly() {
-        return getComputedDaily() * 31;
+        return getComputedDaily() * 29.531;
     }
 }
 
@@ -230,7 +230,7 @@ public class automatic extends AppCompatActivity {
             System.out.println("Updated total daily: " + totalDaily);
 
             viewT_D.setText(String.format("₱ %.2f", totalDaily));
-            viewT_M.setText(String.format("₱ %.2f", totalDaily * 31));
+            viewT_M.setText(String.format("₱ %.2f", totalDaily * 29.531));
         });
     }
 

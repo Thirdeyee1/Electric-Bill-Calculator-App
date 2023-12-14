@@ -46,7 +46,7 @@ public class Auto_summary extends AppCompatActivity {
         List<Auto_Appliance> auto_appliancesList = (List<Auto_Appliance>) getIntent().getSerializableExtra("auto_appliancesList");
         // Inside the onCreate method, retrieve the values from the intent
         double totalDaily = getIntent().getDoubleExtra("totalDaily", 0.0);
-        double totalMonthly = totalDaily * 31;
+        double totalMonthly = totalDaily * 29.531;
 
 // Now you can use these values to update your UI, e.g., set them to TextViews
         TextView viewT_D = findViewById(R.id.total_daily_summary);
