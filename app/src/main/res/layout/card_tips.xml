@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="144dp"
-        android:layout_centerInParent="false"
-        android:layout_centerHorizontal="true">
+        android:layout_centerInParent="true">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="375dp"
+            android:layout_height="160dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
@@ -21,22 +21,49 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp">
 
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:rotation="90"
+                android:layout_marginEnd="347dp"
+                android:layout_marginBottom="48dp"
+                app:srcCompat="@drawable/baseline_wb_twilight_24" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="155dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="232dp"
+                android:layout_marginBottom="105dp"
+                android:text="Energy Saving tips"
+                android:textColor="@android:color/black"
+                android:paddingLeft="10dp"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="126dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:padding="10dp">
+
 
                 <TextView
                     android:id="@+id/tip_1"
-                    android:layout_width="344dp"
-                    android:layout_height="104dp"
+                    android:layout_width="350dp"
+                    android:layout_height="130dp"
+                    android:paddingTop="30dp"
                     android:text="@string/tip_1"
                     android:textColor="@android:color/black"
                     android:textFontWeight="1000"
                     android:textSize="15sp"
                     tools:targetApi="p" />
 
+
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
-</RelativeLayout>
+    </RelativeLayout>

@@ -4,8 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         // Start scrolling handler
         startCardScrolling();
     }
+
     @SuppressLint("DefaultLocale")
     private void addCard(int tipNumber) {
         @SuppressLint("InflateParams") final View view = getLayoutInflater().inflate(R.layout.card_tips, null);
@@ -60,21 +61,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void scrollNextCard() {
         currentCardIndex = (currentCardIndex + 1) % totalCards;
-        int scrollX = currentCardIndex * scrollView.getWidth(); // Adjusting for centering
+
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int screenWidth = displayMetrics.widthPixels;
+
+        int scrollX = currentCardIndex * 1087;
         scrollView.smoothScrollTo(scrollX, 0);
     }
 
-
-
     public void openManual() {
         Intent intent = new Intent(this, ManualActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 
     public void openAutomatic() {
         Intent intent = new Intent(this, automatic.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 }
