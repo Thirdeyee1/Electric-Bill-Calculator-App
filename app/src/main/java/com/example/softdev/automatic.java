@@ -3,19 +3,23 @@ package com.example.softdev;
 import static android.text.TextUtils.isEmpty;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -68,6 +72,8 @@ public class automatic extends AppCompatActivity {
 
     private View exampleSlotView;
     private int cardIndex = 0;
+
+    public String r;
     boolean initialSlotReplaced = false;
 
 
@@ -77,6 +83,7 @@ public class automatic extends AppCompatActivity {
         setContentView(R.layout.activity_automatic);
 
         Button summary = findViewById(R.id.summary);
+        summary.setVisibility(View.INVISIBLE);
         summary.setOnClickListener(v -> openActivity2());
 
         Button back = findViewById(R.id.btnGoBack1);
@@ -84,19 +91,45 @@ public class automatic extends AppCompatActivity {
 
         // For building dialog
         Button add = findViewById(R.id.add);
+        add.setVisibility(View.INVISIBLE);
         layout = findViewById(R.id.container);
 
-        // Build the dialog
-        buildDialog();
+        Button setRate = findViewById(R.id.setRate2);
 
-        add.setOnClickListener(v -> {
-            initialSlotReplaced = true;
-            dialog.show();
+        // if ma pindot ang set rate button, do the ff:
+        setRate.setOnClickListener(v -> {
+
+            removeExampleSlot();
+            // get rate
+            Spinner rate = findViewById(R.id.rateEdit3);
+            Object selectedItem = rate.getSelectedItem();
+
+            if (selectedItem.equals("NORECO")) {
+                r = "11.85"; //avg noreco rate
+                Toast.makeText(automatic.this, "NORECO Selected. Average rate is ₱ " + r, Toast.LENGTH_SHORT).show();
+            } else if(selectedItem.equals("CEBECO")) {
+                r = "12.61"; //avg cebeco rate
+                Toast.makeText(automatic.this, "CEBECO Selected. Average rate is ₱ " + r, Toast.LENGTH_SHORT).show();
+            } else if(selectedItem.equals("VECO")) {
+                r = "11.43"; //avg VECO rate
+                Toast.makeText(automatic.this, "VECO Selected. Average rate is ₱ " + r, Toast.LENGTH_SHORT).show();
+            }
+
+            // set buttons to visible
+            add.setVisibility(View.VISIBLE);
+            summary.setVisibility(View.VISIBLE);
         });
+
+        add.setOnClickListener(v -> OpenApplianceSelection());
     }
 
     public void openMain() {
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void OpenApplianceSelection() {
+        Intent intent = new Intent(this, ApplianceSelection.class);
         startActivity(intent);
     }
 

@@ -16,6 +16,9 @@
             android:name=".ManualActivity"
             android:exported="false" />
         <activity
+            android:name=".ApplianceSelection"
+            android:exported="false" />
+        <activity
             android:name=".automatic"
             android:exported="false" />
         <activity

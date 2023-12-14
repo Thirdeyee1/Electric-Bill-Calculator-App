@@ -22,6 +22,11 @@
     <string name="label_load">Watts</string>
     <string name="label_quantity">Unit(s)</string>
     <string name="label_hour">hr(s)</string>
+    <string-array name="elec_company">
+        <item>NORECO</item>
+        <item>CEBECO</item>
+        <item>VECO</item>
+    </string-array>
 
     <string name="tip_1">To save the most energy, switch off the power point rather than leave appliances on standby.</string>
     <string name="tip_2">Turn off your heater, cooling units and appliances when you go to bed or leave the house.</string>
