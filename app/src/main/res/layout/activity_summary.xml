@@ -80,6 +80,16 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/summaryLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:layout_below="@+id/bottomCard"
+        android:layout_marginTop="10dp">
+    </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
@@ -101,6 +111,7 @@
     </ImageView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/bottomCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
