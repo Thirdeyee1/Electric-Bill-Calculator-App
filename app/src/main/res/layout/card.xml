@@ -80,6 +80,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/hrsDaily"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="17dp"
                     android:text="Cost:"
                     android:textColor="#000000"
                     android:textFontWeight="1000"
@@ -91,8 +94,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/costLabel"
-                    android:text="Daily "
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="1dp"
+                    android:text="Daily "
                     android:textColor="#000000"
                     android:textFontWeight="1000"
                     android:textSize="15sp"
@@ -103,17 +107,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/costLabel"
-                    android:layout_toEndOf="@id/costDaily"
-                    android:text="  Daily" />
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_toEndOf="@+id/costDaily"
+                    android:text="Daily Cost" />
 
                 <TextView
                     android:id="@+id/costMonthly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/costDaily"
+                    android:layout_alignTop="@+id/costDaily"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="178dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="1dp"
                     android:text="Monthly"
                     android:textColor="#000000"
-                    android:layout_marginLeft="5dp"
                     android:textFontWeight="1000"
                     android:textSize="15sp"
                     tools:targetApi="p" />
@@ -122,8 +131,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/costDaily"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="-18dp"
                     android:layout_toEndOf="@id/costMonthly"
-                    android:text="  Monthly" />
+                    android:text="Monthly Cost" />
 
                 <TextView
                     android:layout_width="wrap_content"
