@@ -110,12 +110,13 @@ public class ManualActivity extends AppCompatActivity {
             double Rate = 11.85;
             if (r.isEmpty()) {
                 r = String.valueOf(Rate);
+                rate.setText(String.format("₱ %.2f / kWh", Rate));
                 rate.setHintTextColor(ContextCompat.getColor(ManualActivity.this, android.R.color.white)); // Set hint color to solid white
                 Toast.makeText(ManualActivity.this, "Using this rate 11.85", Toast.LENGTH_SHORT).show();
             } else {
                 try {
                     Rate = Double.parseDouble(r);
-                    rate.setText(String.format("₱ %.2f", Rate)); // Set text to ₱ user_input
+                    rate.setText(String.format("₱ %.2f / kWh", Rate)); // Set text to ₱ user_input
                     rate.setTextColor(ContextCompat.getColor(ManualActivity.this, android.R.color.white)); // Set text color to solid white
                     rate.setHint(""); // Clear hint
                 } catch (NumberFormatException e) {
@@ -174,7 +175,7 @@ public class ManualActivity extends AppCompatActivity {
         final EditText hrsDaily = view.findViewById(R.id.hrsDailyEdit);
 
         builder.setView(view);
-        builder.setTitle("Enter Details");
+        builder.setTitle("Enter Appliance Details");
         builder.setPositiveButton("OK", (dialog, which) -> {
             String nameStr = name.getText().toString();
             String loadStr = load.getText().toString();

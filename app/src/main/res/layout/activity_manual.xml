@@ -24,6 +24,7 @@
         android:inputType="numberDecimal"
         android:maxLength="30"
         android:textAlignment="center"
+        android:textColor="#FFFFFF"
         android:textSize="20sp" />
 
     <Button

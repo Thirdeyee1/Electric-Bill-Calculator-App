@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int screenWidth = displayMetrics.widthPixels;
 
-        int scrollX = currentCardIndex * 1087;
+        int scrollX = currentCardIndex * 722;
         scrollView.smoothScrollTo(scrollX, 0);
     }
 

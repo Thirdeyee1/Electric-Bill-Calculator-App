@@ -53,6 +53,7 @@
         android:layout_marginTop="270dp"
         android:layout_marginBottom="198dp"
         android:background="@drawable/automatic_button_bg_new"
+        android:elevation="50dp"
         android:scaleType="fitXY" />
 
     <ImageButton
@@ -66,6 +67,7 @@
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="194dp"
         android:background="@drawable/manual_button_bg_new"
+        android:elevation="50dp"
         android:scaleType="fitXY" />
 
 
