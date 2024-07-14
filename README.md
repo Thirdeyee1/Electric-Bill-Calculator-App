@@ -69,4 +69,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-For more information, visit the [GitHub repository](https://github.com/yourusername/electric-bill-calculator).
+For more information, visit the [GitHub repository](https://github.com/Thirdeyee1/Electric-Bill-Calculator-App.git).
