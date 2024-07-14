@@ -14,10 +14,10 @@ The Electric Bill Calculator App is designed to help users easily calculate and 
 
 ## Screenshots
 
-<img src="https://github.com/user-attachments/assets/22491128-3435-44fb-a6f1-233d717d8cea" alt="main_page" width="500">
-<img src="https://github.com/user-attachments/assets/5ea25424-e528-4937-aa1f-a9f9f26e6d5d" alt="auto_mode" width="500">
-<img src="https://github.com/user-attachments/assets/5cbd806f-6f41-4a8a-8544-3b416962a016" alt="manual_mode" width="500">
-<img src="https://github.com/user-attachments/assets/a1179b7c-2ab3-4474-8816-589eecc811d4" alt="statistics" width="500">
+<img src="https://github.com/user-attachments/assets/22491128-3435-44fb-a6f1-233d717d8cea" alt="main_page" width="250">
+<img src="https://github.com/user-attachments/assets/5ea25424-e528-4937-aa1f-a9f9f26e6d5d" alt="auto_mode" width="250">
+<img src="https://github.com/user-attachments/assets/5cbd806f-6f41-4a8a-8544-3b416962a016" alt="manual_mode" width="250">
+<img src="https://github.com/user-attachments/assets/a1179b7c-2ab3-4474-8816-589eecc811d4" alt="statistics" width="250">
 
 ## Installation
 
